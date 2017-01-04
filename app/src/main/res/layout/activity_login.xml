@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/login_rl_telephone"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/et_login">
+
+            <ImageView
+                android:id="@+id/login_iv_telphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/telephone" />
+
+            <EditText
+                android:id="@+id/et_account"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:hint="账户/手机号码"
+                android:inputType="textFilter"
+                android:maxLength="11"
+                android:text="gongsi123"
+                android:textColor="#545454"
+                android:textColorHint="#999999"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/login_rl_password"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/et_login1">
+
+            <ImageView
+                android:id="@+id/login_iv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/password" />
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:hint="密码"
+                android:maxLength="16"
+                android:password="true"
+                android:text="Gongsi123"
+                android:textColor="#545454"
+                android:textColorHint="#999999"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_ok"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_login_finish_selector"
+        android:gravity="center"
+        android:text="登  录"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+</LinearLayout>
