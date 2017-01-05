@@ -5,8 +5,8 @@ package net;
  */
 public class HttpHostHolder {
 
-    // static final String HOST = "http://192.168.1.100:8080/";
-    public static final String HOST = "http://115.29.150.49:8080/com.lizhi.company_war%20exploded/";
+    static final String HOST = "http://192.168.1.101:8080/";
+    //public static final String HOST = "http://115.29.150.49:8080/com.lizhi.company_war%20exploded/";
 
 
     public static String login(String username, String password) {
@@ -14,25 +14,25 @@ public class HttpHostHolder {
         return HOST + Consts.URL_LOGIN + "?db_username=" + username + "&db_password=" + password;
     }
 
-    public static String userBox(String username, String password){
+    public static String userBox(String username, String password) {
 
         return HOST + Consts.URL_USEBOX + "?db_username=" + username + "&db_password=" + password;
     }
 
 
-    public static String addBox(String parentName) {
+    public static String addBox(String parentName, String username, String password) {
 
-        return HOST + Consts.URL_ADDTABLE + "?parentName=" + parentName;
+        return HOST + Consts.URL_ADDTABLE + "?parentName=" + parentName + "&db_username=" + username + "&db_password=" + password;
     }
 
-    public static String addTbale(String parentName, String childName) {
+    public static String addTbale(String parentName, String childName, String username, String password) {
 
-        return HOST + Consts.URL_ADDTABLE + "?parentName=" + parentName + "&childName=" + childName;
+        return HOST + Consts.URL_ADDTABLE + "?parentName=" + parentName + "&childName=" + childName + "&db_username=" + username + "&db_password=" + password;
     }
 
-    public static String getBoardDetail(String parentName, String childName) {
+    public static String getBoardDetail(String parentName, String childName, String username, String password) {
 
-        return HOST + Consts.URL_BOARDDETAIL + "?boxName=" + parentName + "&boardName=" + childName;
+        return HOST + Consts.URL_BOARDDETAIL + "?boxName=" + parentName + "&boardName=" + childName + "&db_username=" + username + "&db_password=" + password;
     }
 
     public static String dropbox() {
@@ -43,5 +43,9 @@ public class HttpHostHolder {
     public static String deletetable(String parentName, String childName) {
 
         return HOST + Consts.URL_DROPTABLE + "?boxname=" + parentName + "&boardname=" + childName;
+    }
+
+    public static String deletekey() {
+        return HOST + Consts.URL_DELETEKEYSERVLET;
     }
 }

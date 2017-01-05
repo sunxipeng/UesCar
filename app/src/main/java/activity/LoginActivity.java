@@ -2,6 +2,7 @@ package activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,6 +13,9 @@ import com.usecar.uescar.R;
 import net.HttpConfigs;
 import net.HttpHostHolder;
 import net.XHttpUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import bean.BeseBean;
 import util.ProgressDialogUtils;
@@ -27,6 +31,10 @@ public class LoginActivity extends BaseActivity implements XHttpUtil.HttpCallBac
     private EditText et_password;
     private String account;
     private String password;
+    private long mExitTime;
+    private String message;
+    private String permision;
+    private String status;
 
     @Override
     protected int getLayoutId() {
@@ -80,29 +88,47 @@ public class LoginActivity extends BaseActivity implements XHttpUtil.HttpCallBac
         }
     }
 
+    public boolean onKeyDown(int paramInt, KeyEvent paramKeyEvent) {
+        if (paramInt == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - this.mExitTime > 2000L) {
+                Toast.makeText(this, "再按一次退出爱车app", Toast.LENGTH_SHORT).show();
+                this.mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(paramInt, paramKeyEvent);
+    }
+
     @Override
     public void onSuccess(ResponseInfo<String> responseInfo, int resultCode) {
 
         String result = responseInfo.result;
-        BeseBean bean = new BeseBean();
-        BeseBean loginbean = bean.parse(result);
-        if (loginbean.status.equals("1")) {
-            //登录成功
-            SharePreferenceUtils.putLoginusername(account);
-            SharePreferenceUtils.putLoginpassword(password);
-            String test = SharePreferenceUtils.getLognUsername();
-            String test1 = SharePreferenceUtils.getLognpassword();
-            startActivity(new Intent(this, TestActivity.class));
-            Toast.makeText(this, loginbean.message, Toast.LENGTH_SHORT).show();
-            progressDialogUtils.dismiss();
-            finish();
-
-        } else {
-            //登陆失败
-            Toast.makeText(this, loginbean.message, Toast.LENGTH_SHORT).show();
-            progressDialogUtils.dismiss();
+        JSONObject localJSONObject = null;
+        try {
+            localJSONObject = new JSONObject(result);
+            this.status = localJSONObject.optString("status");
+            this.message = localJSONObject.optString("message");
+            this.permision = localJSONObject.optString("permision");
+            if (this.status.equals("1")) {
+                SharePreferenceUtils.putLoginusername(this.account);
+                SharePreferenceUtils.putLoginpassword(this.password);
+                SharePreferenceUtils.putUserPermision(this.permision);
+                SharePreferenceUtils.getUserPermision();
+                startActivity(new Intent(this, TestActivity.class));
+                Toast.makeText(this, this.message, Toast.LENGTH_SHORT).show();
+                this.progressDialogUtils.dismiss();
+                finish();
+                return;
+            } else {
+                //登陆失败
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                progressDialogUtils.dismiss();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
     }
 
     @Override

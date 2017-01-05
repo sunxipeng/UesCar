@@ -17,6 +17,12 @@
             android:gravity="center"
             android:text="" />
 
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_loading_success"/>
+
         <TextView
             android:id="@+id/bt_left"
             android:layout_width="40dp"
@@ -28,11 +34,13 @@
 
         <TextView
             android:id="@+id/bt_main"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:gravity="center"
-            android:text="MAIN"
+            android:text="DELETE"
+            android:background="#ff0000"
             android:textColor="#FFFFFF" />
     </LinearLayout>
     <android.support.v4.widget.DrawerLayout

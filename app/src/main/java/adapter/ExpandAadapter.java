@@ -29,6 +29,7 @@ import db.UserDaoImpl;
 import util.CommonConfig;
 import util.ListViewParamsUtils;
 import util.ProgressDialogUtils;
+import util.SharePreferenceUtils;
 import view.CustomListView;
 
 /**
@@ -172,7 +173,7 @@ public class ExpandAadapter extends BaseExpandableListAdapter implements XHttpUt
 
         progressDialogUtils = new ProgressDialogUtils(context);
         progressDialogUtils.show();
-        String url = HttpHostHolder.addTbale(parent_test, str);
+        String url = HttpHostHolder.addTbale(parent_test, str, SharePreferenceUtils.getLognUsername(), SharePreferenceUtils.getLognpassword());
         XHttpUtil.getXHttpUtilInstance().dogetfromserver(url, this, HttpConfigs.RESULT_CEODE_1);
     }
 

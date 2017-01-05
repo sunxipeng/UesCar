@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class SQLAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+        BoardInfo localBoardInfo = (BoardInfo) this.boardData.get(i);
+        ViewHolder localViewHolder;
         ViewHolder viewHolder = null;
         if (view == null) {
             viewHolder = new ViewHolder();
@@ -58,6 +61,7 @@ public class SQLAdapter extends BaseAdapter {
             viewHolder.iv_board_car = (ImageView) view.findViewById(R.id.iv_board_car);
             viewHolder.tv_name_key = (TextView) view.findViewById(R.id.tv_name_key);
             viewHolder.tv_name = (TextView) view.findViewById(R.id.tv_name);
+            viewHolder.checkBox = (CheckBox) view.findViewById(R.id.checkbox);
 
             viewHolder.tv_code_key = (TextView) view.findViewById(R.id.tv_code_key);
             viewHolder.tv_code = (TextView) view.findViewById(R.id.tv_code);
@@ -71,8 +75,14 @@ public class SQLAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.tv_position.setText(boardData.get(i).get库位());
-
+        viewHolder.tv_position.setText(localBoardInfo.get库位());
+        viewHolder.tv_name.setText(localBoardInfo.get姓名());
+        viewHolder.checkBox.setChecked(localBoardInfo.isSelected());
+        if (!localBoardInfo.isshow()) {
+            viewHolder.checkBox.setVisibility(View.GONE);
+        } else {
+            viewHolder.checkBox.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
@@ -90,5 +100,7 @@ public class SQLAdapter extends BaseAdapter {
 
         private TextView tv_position_key;
         private TextView tv_position;
+
+        private CheckBox checkBox;
     }
 }

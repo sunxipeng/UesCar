@@ -15,10 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.usecar.uescar.R;
@@ -69,6 +71,13 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     private AlertDialog warn_dialog;
     private ProgressDialogUtils progressDialogUtils;
     private TextView tv_username;
+    private List<BoardInfo> boardData;
+
+    //checkbox是否展示的标志位
+    private boolean isshow = false;
+    //backspac的标志位
+    private boolean cancleDelete = false;
+    private ImageView delete;
 
 
     @Override
@@ -105,12 +114,33 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
+        delete = (ImageView) findViewById(R.id.delete);
+        delete.setOnClickListener(this);
+
         lv_sql1 = (ListView) findViewById(R.id.lv_sql);
         lv_sql1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                startActivity(new Intent(TestActivity.this, UserDetailActivity.class));
+                BoardInfo boardInfo = (BoardInfo) boardData.get(i);
+                if (isshow) {
+
+                    if (boardInfo.isSelected()) {
+                        boardInfo.setSelected(false);
+                        if (selectData.contains(boardInfo)) {
+                            selectData.remove(boardInfo);
+                        }
+                    } else {
+                        boardInfo.setSelected(true);
+                        if (selectData.contains(boardInfo)) {
+                            selectData.remove(boardInfo);
+                        }
+                        selectData.add(boardInfo);
+                    }
+
+                    sqlAdapter.notifyDataSetChanged();
+                }
+                //startActivity(new Intent(TestActivity.this, UserDetailActivity.class));
             }
         });
 
@@ -214,7 +244,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     private void queryBoardDetail(String parentName, String childName) {
         progressDialogUtils = new ProgressDialogUtils(this);
         progressDialogUtils.show();
-        String url = HttpHostHolder.getBoardDetail(parentName, childName);
+        String url = HttpHostHolder.getBoardDetail(parentName, childName, SharePreferenceUtils.getLognUsername(), SharePreferenceUtils.getLognpassword());
         XHttpUtil.getXHttpUtilInstance().dogetfromserver(url, this, HttpConfigs.RESULT_CEODE_3);
     }
 
@@ -227,7 +257,6 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onClick(View view) {
                 showParentDialog();
-
             }
         });
 
@@ -280,7 +309,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     private void addData() {
 
         progressDialogUtils = new ProgressDialogUtils(this);
-        String url = HttpHostHolder.addBox(str);
+        String url = HttpHostHolder.addBox(str, SharePreferenceUtils.getLognUsername(), SharePreferenceUtils.getLognpassword());
         XHttpUtil.getXHttpUtilInstance().dogetfromserver(url, this, HttpConfigs.RESULT_CEODE_2);
 
     }
@@ -320,7 +349,39 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case R.id.bt_main:
-                drawerLayout.closeDrawer(Gravity.LEFT);
+                //删除数据操作
+                //drawerLayout.closeDrawer(Gravity.LEFT);
+                this.cancleDelete = true;
+                this.isshow = true;
+                for (BoardInfo board : boardData) {
+                    board.setIsshow(true);
+                }
+                sqlAdapter.notifyDataSetChanged();
+                break;
+
+            case R.id.delete:
+
+                String str1 = SharePreferenceUtils.getLognUsername();
+                String str2 = SharePreferenceUtils.getLognpassword();
+                JSONObject localJSONObject = new JSONObject();
+                try {
+                    localJSONObject.put("boardname", this.boxname + "_" + this.boardname);
+                    localJSONObject.put("keydata", new Gson().toJson(this.selectData));
+                    localJSONObject.put("db_username", str1);
+                    localJSONObject.put("db_password", str2);
+                    Log.d("TESTACTIVITY", localJSONObject.toString());
+                    StringEntity localStringEntity2 = new StringEntity(localJSONObject.toString(), "utf-8");
+                    RequestParams localRequestParams = new RequestParams();
+                    localRequestParams.setBodyEntity(localStringEntity2);
+                    this.progressDialogUtils = new ProgressDialogUtils(this);
+                    String str3 = HttpHostHolder.deletekey();
+                    XHttpUtil.getXHttpUtilInstance().doPostserver(str3, localRequestParams, this, HttpConfigs.RESULT_CEODE_5);
+                    return;
+                } catch (Exception localException) {
+
+                    localException.printStackTrace();
+
+                }
                 break;
         }
     }
@@ -374,7 +435,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                 BeseBean beandata = boardbean.parse(result);
                 if (beandata.status.equals("1")) {
                     //查询数据成功
-                    List<BoardInfo> boardData = beandata.getBoardDetail();
+                    boardData = beandata.getBoardDetail();
                     sqlAdapter = new SQLAdapter(this, boardData);
                     lv_sql1.setAdapter(sqlAdapter);
 
@@ -397,6 +458,24 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                     Toast.makeText(this, deletebean.message, Toast.LENGTH_SHORT).show();
                     progressDialogUtils.dismiss();
                 }
+
+                break;
+
+            case HttpConfigs.RESULT_CEODE_5:
+                BeseBean localBeseBean2 = new BeseBean().parse(result);
+                if (localBeseBean2.status.equals("1")) {
+                    this.boardData.removeAll(this.selectData);
+                    this.sqlAdapter.notifyDataSetChanged();
+                    Toast.makeText(this, localBeseBean2.message, Toast.LENGTH_SHORT).show();
+                    this.isshow = false;
+                    for (BoardInfo boardInfo : boardData) {
+                        boardInfo.setSelected(false);
+                        boardInfo.setIsshow(false);
+                    }
+                    this.sqlAdapter.notifyDataSetChanged();
+                    this.selectData.clear();
+                }
+                progressDialogUtils.dismiss();
 
                 break;
 
@@ -467,7 +546,20 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
      */
     private long mExitTime;
 
+    //删除数据条目的临时容器
+    private List<BoardInfo> selectData = new ArrayList();
+
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK && cancleDelete) {
+            this.isshow = false;
+            for (BoardInfo boardinfo : boardData) {
+                boardinfo.setSelected(false);
+                boardinfo.setIsshow(false);
+            }
+            this.sqlAdapter.notifyDataSetChanged();
+            this.cancleDelete = false;
+            this.selectData.clear();
+        }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
                 Toast.makeText(this, "再按一次退出爱车app", Toast.LENGTH_SHORT).show();
