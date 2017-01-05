@@ -18,10 +18,19 @@
             android:text="" />
 
         <ImageView
+            android:id="@+id/iv_addkey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/menu_extend" />
+
+        <ImageView
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_loading_success"/>
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_loading_success" />
 
         <TextView
             android:id="@+id/bt_left"
@@ -36,13 +45,14 @@
             android:id="@+id/bt_main"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:gravity="center"
-            android:text="DELETE"
             android:background="#ff0000"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="DELETE"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -51,8 +61,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:paddingLeft="10dp">
 
 
@@ -60,14 +70,14 @@
                 android:id="@+id/lv_sql"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="我是主界面"/>
+                android:text="我是主界面" />
 
         </RelativeLayout>
 
@@ -76,40 +86,41 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:choiceMode="singleChoice"
             android:background="#F4F6F5"
+            android:choiceMode="singleChoice"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
                 android:background="#FFFFFF"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:src="@mipmap/btn_mine_on"/>
+                    android:src="@mipmap/btn_mine_on" />
+
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:textSize="15sp"
-                    android:text="用户名"/>
+                    android:text="用户名"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <ExpandableListView
                 android:id="@+id/expandlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:cacheColorHint="#000000"
-                android:background="#FFFFFF"
-                android:childDivider="#999999"
                 android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:cacheColorHint="#000000"
+                android:childDivider="#999999"
                 android:divider="#999999"
                 android:dividerHeight="0.5dp">
 

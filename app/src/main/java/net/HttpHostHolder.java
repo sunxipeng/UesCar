@@ -48,4 +48,9 @@ public class HttpHostHolder {
     public static String deletekey() {
         return HOST + Consts.URL_DELETEKEYSERVLET;
     }
+
+    public static String addkey()
+    {
+        return HOST + Consts.URL_ADDKEYSERVLET;
+    }
 }

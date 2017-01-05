@@ -1,77 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_width="match_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:background="#FFFFFF"
-    android:layout_height="wrap_content">
+    android:layout_marginLeft="20.0dip"
+    android:layout_marginRight="20.0dip"
+    android:background="#ffffffff"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="20sp"
-            android:textColor="#33B5E5"
-            android:text="添加"/>
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginTop="10.0dip"
+            android:text="添加"
+            android:textColor="#ff33b5e5"
+            android:textSize="18.0sp" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="#33B5E5"/>
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dip"
+            android:layout_marginTop="10.0dip"
+            android:background="#ff33b5e5" />
+
         <EditText
             android:id="@+id/et_editor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:layout_marginTop="20.0dip"
+            android:background="@drawable/mapper_shape"
             android:hint="请输入新设备"
-            android:layout_marginTop="20dp"/>
+            android:paddingLeft="10.0dip"
+            android:textColorHint="#99999999"
+            android:textSize="15.0sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:layout_marginTop="10.0dip"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_mapper"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/mapper_shape"
+                android:focusable="false"
+                android:hint="请扫描号码"
+                android:paddingLeft="10.0dip"
+                android:textColorHint="#99999999"
+                android:textSize="15.0sp" />
+
+            <Button
+                android:id="@+id/bt_mapper"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5.0dip"
+                android:background="@drawable/mapper_shape"
+                android:text="扫描"
+                android:textColor="#ff666666"
+                android:textSize="13.0sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        android:layout_marginTop="20.0dip"
         android:orientation="vertical">
 
-
         <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#999999"/>
+            android:layout_width="fill_parent"
+            android:layout_height="0.30000007dip"
+            android:background="#ff999999" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/btn_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
                 android:gravity="center"
-                android:layout_weight="1"
-                android:text="取消"/>
+                android:text="取消" />
+
             <View
-                android:layout_width="0.3dp"
-                android:layout_height="match_parent"
-                android:background="#999999"/>
+                android:layout_width="0.30000007dip"
+                android:layout_height="fill_parent"
+                android:background="#ff999999" />
+
             <TextView
                 android:id="@+id/btn_ok"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
                 android:gravity="center"
-                android:layout_weight="1"
-                android:text="确定"/>
-
+                android:text="确定" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

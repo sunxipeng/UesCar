@@ -12,4 +12,5 @@ public class Consts {
     public static final String URL_DROPTABLE = "DropTableServet";
     public static final String URL_USEBOX = "UserBoxServlet";
     public static final String URL_DELETEKEYSERVLET = "DeleteKeyServlet";
+    public static final String URL_ADDKEYSERVLET = "AddKeyServlet";
 }

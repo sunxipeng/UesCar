@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,6 +46,7 @@ import util.CommonConfig;
 import util.ProgressDialogUtils;
 import util.SharePreferenceUtils;
 import view.WheelView;
+import zxing.activity.CaptureActivity;
 
 /**
  * Created by sunxipeng on 2016/11/7.
@@ -78,6 +80,9 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     //backspac的标志位
     private boolean cancleDelete = false;
     private ImageView delete;
+    private ImageView iv_addkey;
+    private EditText et_mapper;
+    private BoardInfo addkeyboardInfo;
 
 
     @Override
@@ -100,6 +105,9 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
         bt_left.setOnClickListener(this);
         bt_main = (TextView) findViewById(R.id.bt_main);
         bt_main.setOnClickListener(this);
+        iv_addkey = (ImageView) findViewById(R.id.iv_addkey);
+        iv_addkey.setOnClickListener(this);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -192,7 +200,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                 operate_dialog.dismiss();
                 startActivity(new Intent(TestActivity.this, UserDetailActivity.class)
                         .putExtra("boxname", boxname).putExtra("boardname", boardname)
-                        .putExtra("operete", operete).putExtra("position", position));
+                        .putExtra("operete", operete).putExtra("position", boardData.get(position).get库位()));
             }
         });
 
@@ -383,7 +391,78 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
 
                 }
                 break;
+
+
+            case R.id.iv_addkey:
+                showAddKeyDialog();
+                break;
         }
+    }
+
+    //添加钥匙弹窗
+    private void showAddKeyDialog() {
+        linkDialog = new AlertDialog.Builder(this).create();
+        View addKeyview = LayoutInflater.from(this).inflate(R.layout.dialog_new, null);
+        final EditText et_editor = (EditText) addKeyview.findViewById(R.id.et_editor);
+        et_mapper = ((EditText) addKeyview.findViewById(R.id.et_mapper));
+        addKeyview.findViewById(R.id.bt_mapper).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View paramView) {
+                Intent localIntent = new Intent(TestActivity.this, CaptureActivity.class);
+                TestActivity.this.startActivityForResult(localIntent, 0);
+            }
+        });
+
+        addKeyview.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String str_editor = et_editor.getText().toString().trim();
+                String str_mapper = et_mapper.getText().toString().trim();
+                if ((TextUtils.isEmpty(str_editor)) || (str_mapper.isEmpty())) {
+                    Toast.makeText(TestActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String username = SharePreferenceUtils.getLognUsername();
+                String password = SharePreferenceUtils.getLognpassword();
+
+                addkeyboardInfo = new BoardInfo();
+                addkeyboardInfo.set库位(str_editor);
+                addkeyboardInfo.set钥匙编码(str_mapper);
+                String str_keydata = new Gson().toJson(addkeyboardInfo);
+                JSONObject localJSONObject = new JSONObject();
+                try {
+                    localJSONObject.put("boardname", boardname);
+                    localJSONObject.put("boxname", boxname);
+                    localJSONObject.put("db_username", username);
+                    localJSONObject.put("db_password", password);
+                    localJSONObject.put("keyinfo", str_keydata);
+                    StringEntity localStringEntity = new StringEntity(localJSONObject.toString(), "utf-8");
+                    RequestParams localRequestParams = new RequestParams();
+                    localRequestParams.setBodyEntity(localStringEntity);
+                    progressDialogUtils = new ProgressDialogUtils(TestActivity.this);
+                    String url = HttpHostHolder.addkey();
+                    XHttpUtil.getXHttpUtilInstance().doPostserver(url, localRequestParams, TestActivity.this, HttpConfigs.RESULT_CEODE_6);
+                    linkDialog.dismiss();
+                } catch (Exception localException) {
+
+                }
+            }
+
+
+        });
+
+        addKeyview.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                linkDialog.dismiss();
+            }
+
+        });
+        linkDialog.setCancelable(false);
+        linkDialog.setView(addKeyview, 0, 0, 0, 0);
+        linkDialog.show();
     }
 
     @Override
@@ -479,6 +558,19 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
 
                 break;
 
+            case HttpConfigs.RESULT_CEODE_6:
+
+                BeseBean localBeseBean1 = new BeseBean().parse(result);
+                if (localBeseBean1.status.equals("1")) {
+                    this.boardData.add(addkeyboardInfo);
+                    this.sqlAdapter.notifyDataSetChanged();
+                    Toast.makeText(this, localBeseBean1.message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, localBeseBean1.message, Toast.LENGTH_SHORT).show();
+                }
+                progressDialogUtils.dismiss();
+                break;
+
         }
 
     }
@@ -571,5 +663,16 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //处理扫描结果（在界面上显示）
+        if (resultCode == RESULT_OK && requestCode == 0) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString("result");
+            et_mapper.setText(scanResult);
+        }
     }
 }

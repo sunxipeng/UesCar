@@ -1,171 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/about_head"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="10.0dip"
+            android:paddingLeft="20.0dip"
+            android:paddingRight="20.0dip"
+            android:paddingTop="10.0dip"
+            android:src="@drawable/btn_title_head_selector" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="操作界面"
+            android:textColor="@android:color/black"
+            android:textSize="16.0sp" />
+
+      <!--  <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.0dip"
+            android:paddingBottom="10.0dip"
+            android:paddingLeft="10.0dip"
+            android:paddingRight="10.0dip"
+            android:paddingTop="10.0dip"
+            android:src="@mipmap/share" />-->
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.30000007dip"
+        android:background="#ff999999" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
         android:orientation="vertical"
-        android:paddingLeft="10dp">
+        android:paddingLeft="10.0dip">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20.0dip"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="操作："
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textColor="#ff666666"
+                    android:textSize="15.0sp" />
 
                 <TextView
                     android:id="@+id/tv_operate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="取走"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
+                    android:text=""
+                    android:textColor="#ff666666"
+                    android:textSize="15.0sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="库位："
+                    android:textColor="#ff666666"
+                    android:textSize="15.0sp" />
 
                 <TextView
                     android:id="@+id/tv_position"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="库位："
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
+                    android:textColor="#ff666666"
+                    android:textSize="15.0sp" />
             </LinearLayout>
-
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginTop="20.0dip"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="操作人姓名:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="#ff666666"
+                android:textSize="15.0sp" />
 
             <EditText
                 android:id="@+id/et_opname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/bt_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="扫描" />
-
-
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/mapper_shape"
+                android:hint="输入操作人姓名"
+                android:paddingLeft="10.0dip"
+                android:textSize="13.0sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20.0dip"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="编码:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="#ff666666"
+                android:textSize="15.0sp" />
 
             <EditText
                 android:id="@+id/et_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/mapper_shape"
+                android:hint="输入编码"
+                android:paddingLeft="10.0dip"
+                android:textSize="13.0sp" />
 
-
+            <Button
+                android:id="@+id/bt_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:layout_marginRight="10.0dip"
+                android:background="@drawable/mapper_shape"
+                android:text="扫描"
+                android:textColor="#ff666666"
+                android:textSize="15.0sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20.0dip"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="信息:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="#ff666666"
+                android:textSize="15.0sp" />
 
             <EditText
                 android:id="@+id/et_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/mapper_shape"
+                android:hint="输入信息"
+                android:paddingLeft="10.0dip"
+                android:textSize="13.0sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="20.0dip"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="用途:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="#ff666666"
+                android:textSize="15.0sp" />
 
             <EditText
                 android:id="@+id/et_tool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/mapper_shape"
+                android:hint="输入用途"
+                android:paddingLeft="10.0dip"
+                android:textSize="13.0sp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/bt_sd_read"
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:layout_marginLeft="50.0dip"
+            android:layout_marginRight="50.0dip"
+            android:layout_marginTop="40.0dip"
+            android:text="读取ic卡数据" />
+    </LinearLayout>
 
-        <!--<ImageView
-            android:id="@+id/iv_twocode"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/test_erweima"/>-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/bt_update"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="30.0dip"
+            android:layout_marginRight="20.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/mapper_shape"
+            android:text="确定"
+            android:textColor="#ff666666"
+            android:textSize="15.0sp" />
 
+        <Button
+            android:id="@+id/bt_canle"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="30.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/mapper_shape"
+            android:text="取消"
+            android:textColor="#ff666666"
+            android:textSize="15.0sp" />
     </LinearLayout>
 </LinearLayout>
