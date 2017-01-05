@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.usecar.uescar.R;
 
+import net.HttpConfigs;
 import net.HttpHostHolder;
 import net.XHttpUtil;
 
@@ -184,6 +185,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
         if (result == 0) {
             text = showData(text, snr, 0, 3);
             et_code.setText(text);
+            this.code_mark = "2";
         } else {
             Toast.makeText(this, "读取数据失败，请正确放置ic卡位置", Toast.LENGTH_SHORT).show();
             et_code.setText(null);
@@ -209,10 +211,10 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
     private void request() {
         this.progressDialogUtils = new ProgressDialogUtils(this);
-        /*this.progressDialogUtils.show();
+        this.progressDialogUtils.show();
 
         String str = HttpHostHolder.updatestate(boxname, boardname, position, operete, db_username, db_password, op_name, op_message, op_tool, op_code, code_mark, keycode);
-        XHttpUtil.getXHttpUtilInstance().dogetfromserver(str, this, 0);*/
+        XHttpUtil.getXHttpUtilInstance().dogetfromserver(str, this, HttpConfigs.RESULT_CEODE_1);
     }
 
     @Override

@@ -83,7 +83,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     private ImageView iv_addkey;
     private EditText et_mapper;
     private BoardInfo addkeyboardInfo;
-
+    private int op_position;
 
     @Override
     protected int getLayoutId() {
@@ -156,8 +156,10 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                op_position = i;
                 Log.d("TestActivity,我点击的第一个参数", String.valueOf(i));
                 Log.d("TestActivity,我点击的第二个参数", String.valueOf(l));
+
                 showOperationDialog(i);
                 return true;
             }
@@ -231,6 +233,18 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                         queryBoardDetail(boxname, boardname);
 
                         break;
+
+                    case "refresh_detail":
+
+                        BoardInfo boardInfo = (BoardInfo) intent.getSerializableExtra("operate_result");
+                        BoardInfo n_boardInfo = (BoardInfo) boardData.get(op_position);
+                        n_boardInfo.set操作(boardInfo.get操作());
+                        n_boardInfo.set日期(boardInfo.get日期());
+                        n_boardInfo.set时间(boardInfo.get时间());
+                        n_boardInfo.set姓名(boardInfo.get姓名());
+                        n_boardInfo.set备注(boardInfo.get备注());
+                        sqlAdapter.notifyDataSetChanged();
+                        break;
                 }
 
             }
@@ -239,6 +253,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(CommonConfig.REFRESH);
         intentFilter.addAction(CommonConfig.CLOSE);
+        intentFilter.addAction(CommonConfig.REFRESH_DETAIL_BOARD);
         registerReceiver(broadcastReceiver, intentFilter);
 
     }
