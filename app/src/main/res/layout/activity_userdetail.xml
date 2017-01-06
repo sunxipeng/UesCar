@@ -7,8 +7,9 @@
 
     <RelativeLayout
         android:id="@+id/about_head"
-        android:layout_width="fill_parent"
-        android:layout_height="50.0dip">
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#44b5df">
 
         <ImageView
             android:id="@+id/iv_left"
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="操作界面"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="16.0sp" />
 
       <!--  <ImageView
@@ -246,7 +247,7 @@
             android:layout_weight="1.0"
             android:background="@drawable/mapper_shape"
             android:text="确定"
-            android:textColor="#ff666666"
+            android:textColor="#44b5df"
             android:textSize="15.0sp" />
 
         <Button
@@ -259,7 +260,7 @@
             android:layout_weight="1.0"
             android:background="@drawable/mapper_shape"
             android:text="取消"
-            android:textColor="#ff666666"
+            android:textColor="#44b5df"
             android:textSize="15.0sp" />
     </LinearLayout>
 </LinearLayout>

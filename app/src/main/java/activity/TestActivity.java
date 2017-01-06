@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,11 +52,11 @@ import zxing.activity.CaptureActivity;
 /**
  * Created by sunxipeng on 2016/11/7.
  */
-public class TestActivity extends BaseActivity implements View.OnClickListener, XHttpUtil.HttpCallBack {
+public class TestActivity extends BaseActivity implements View.OnClickListener, XHttpUtil.HttpCallBack, DrawerLayout.DrawerListener {
 
 
-    private TextView bt_left;
-    private TextView bt_main;
+    //private TextView bt_left;
+    //private TextView bt_main;
     private DrawerLayout drawerLayout;
     private ExpandableListView expandableListView;
     private List<String> parent;
@@ -85,6 +86,9 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     private BoardInfo addkeyboardInfo;
     private int op_position;
     private ImageView iv_setting;
+    private ImageView iv_search;
+    private ImageView iv_editor;
+    private LinearLayout ll_all_operate;
 
     @Override
     protected int getLayoutId() {
@@ -102,16 +106,18 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
 
         tv_username = (TextView) findViewById(R.id.tv_username);
         tv_main = (TextView) findViewById(R.id.tv_main);
-        bt_left = (TextView) findViewById(R.id.bt_left);
-        bt_left.setOnClickListener(this);
-        bt_main = (TextView) findViewById(R.id.bt_main);
-        bt_main.setOnClickListener(this);
+        iv_search = (ImageView) findViewById(R.id.iv_search);
+        iv_search.setOnClickListener(this);
+        iv_editor = (ImageView) findViewById(R.id.iv_editor);
+        iv_editor.setOnClickListener(this);
         iv_addkey = (ImageView) findViewById(R.id.iv_addkey);
         iv_addkey.setOnClickListener(this);
         iv_setting = (ImageView) findViewById(R.id.iv_setting);
         iv_setting.setOnClickListener(this);
+        ll_all_operate = (LinearLayout) findViewById(R.id.ll_all_operate);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.addDrawerListener(this);
         expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -372,15 +378,14 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_left:
-                drawerLayout.openDrawer(Gravity.LEFT);
-
-
+            case R.id.iv_search:
+                //drawerLayout.openDrawer(Gravity.LEFT);
                 break;
 
-            case R.id.bt_main:
+            case R.id.iv_editor:
                 //删除数据操作
-                //drawerLayout.closeDrawer(Gravity.LEFT);
+                ll_all_operate.setVisibility(View.GONE);
+                delete.setVisibility(View.VISIBLE);
                 this.cancleDelete = true;
                 this.isshow = true;
                 for (BoardInfo board : boardData) {
@@ -551,14 +556,15 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                 break;
 
             case HttpConfigs.RESULT_CEODE_4:
-                BeseBean delete = new BeseBean();
-                BeseBean deletebean = delete.parse(result);
+                BeseBean delete1 = new BeseBean();
+                BeseBean deletebean = delete1.parse(result);
                 if (deletebean.status.equals("1")) {
                     //删除成功
                     expandAadapter.parent.remove(currentpositon);
                     expandAadapter.childdata.remove(currentpositon);
                     expandAadapter.notifyDataSetChanged();
                     progressDialogUtils.dismiss();
+
                 } else {
                     Toast.makeText(this, deletebean.message, Toast.LENGTH_SHORT).show();
                     progressDialogUtils.dismiss();
@@ -579,6 +585,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                     }
                     this.sqlAdapter.notifyDataSetChanged();
                     this.selectData.clear();
+                    ll_all_operate.setVisibility(View.VISIBLE);
+                    delete.setVisibility(View.GONE);
                 }
                 progressDialogUtils.dismiss();
 
@@ -677,8 +685,10 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
             this.sqlAdapter.notifyDataSetChanged();
             this.cancleDelete = false;
             this.selectData.clear();
+            ll_all_operate.setVisibility(View.VISIBLE);
+            delete.setVisibility(View.GONE);
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && !cancleDelete) {
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
                 Toast.makeText(this, "再按一次退出爱车app", Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
@@ -700,5 +710,31 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
             String scanResult = bundle.getString("result");
             et_mapper.setText(scanResult);
         }
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+        //侧滑菜单打开
+        ll_all_operate.setVisibility(View.GONE);
+        iv_setting.setVisibility(View.VISIBLE);
+        delete.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+        //侧滑菜单关闭
+        ll_all_operate.setVisibility(View.VISIBLE);
+        iv_setting.setVisibility(View.GONE);
+        delete.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

@@ -17,7 +17,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="50dp"
         android:background="#ffffffff"
-        android:src="@mipmap/ic_track_explore_loc_content" />
+        android:src="@mipmap/target" />
 
     <scroller.ScrollLayout
         android:id="@+id/scroll_down_layout"

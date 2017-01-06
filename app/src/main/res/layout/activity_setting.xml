@@ -7,8 +7,9 @@
 
     <RelativeLayout
         android:id="@+id/about_head"
-        android:layout_width="fill_parent"
-        android:layout_height="50.0dip">
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#44b5df">
 
         <ImageView
             android:id="@+id/iv_left"
