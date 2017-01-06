@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import com.usecar.uescar.R;
 
+import java.util.List;
+
+import bean.MarkDetailMessage;
+
 
 /**
  * @function listviewadapter
@@ -17,15 +21,17 @@ import com.usecar.uescar.R;
  */
 public class ListviewAdapter extends BaseAdapter {
 
+    private List<MarkDetailMessage> data;
     private Context mContext;
 
-    public ListviewAdapter(Context context) {
+    public ListviewAdapter(Context context, List<MarkDetailMessage> data) {
         this.mContext = context;
+        this.data = data;
     }
 
     @Override
     public int getCount() {
-        return 50;
+        return data.size();
     }
 
     @Override
@@ -40,8 +46,13 @@ public class ListviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        MarkDetailMessage markDetailMessage = data.get(position);
         if (null == convertView) {
             convertView = View.inflate(mContext, R.layout.item_listview, null);
+            TextView a_name = (TextView) convertView.findViewById(R.id.a_name);
+            TextView number = (TextView) convertView.findViewById(R.id.number);
+            a_name.setText(markDetailMessage.getName());
+            number.setText(markDetailMessage.getIcnumber());
         }
 
         return convertView;

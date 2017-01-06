@@ -1,6 +1,8 @@
 package bean;
 
 
+import android.widget.ListView;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -49,6 +51,15 @@ public class BeseBean implements Serializable {
 
         Gson gson = new Gson();
         List<BoardInfo> obj = gson.fromJson(content.toString(), new TypeToken<List<BoardInfo>>() {
+        }.getType());
+
+        return obj;
+    }
+
+    public List<MarkDetailMessage> getMarkDetail() {
+
+        Gson gson = new Gson();
+        List<MarkDetailMessage> obj = gson.fromJson(content.toString(), new TypeToken<List<MarkDetailMessage>>() {
         }.getType());
 
         return obj;
