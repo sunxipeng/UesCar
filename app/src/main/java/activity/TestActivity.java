@@ -84,6 +84,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
     private EditText et_mapper;
     private BoardInfo addkeyboardInfo;
     private int op_position;
+    private ImageView iv_setting;
 
     @Override
     protected int getLayoutId() {
@@ -107,6 +108,8 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
         bt_main.setOnClickListener(this);
         iv_addkey = (ImageView) findViewById(R.id.iv_addkey);
         iv_addkey.setOnClickListener(this);
+        iv_setting = (ImageView) findViewById(R.id.iv_setting);
+        iv_setting.setOnClickListener(this);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.expandlist);
@@ -245,8 +248,11 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
                         n_boardInfo.set备注(boardInfo.get备注());
                         sqlAdapter.notifyDataSetChanged();
                         break;
-                }
 
+                    case "closemainactivity":
+                        finish();
+                        break;
+                }
             }
         };
 
@@ -254,6 +260,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
         intentFilter.addAction(CommonConfig.REFRESH);
         intentFilter.addAction(CommonConfig.CLOSE);
         intentFilter.addAction(CommonConfig.REFRESH_DETAIL_BOARD);
+        intentFilter.addAction(CommonConfig.CLOSEMAINACTIVITY);
         registerReceiver(broadcastReceiver, intentFilter);
 
     }
@@ -410,6 +417,10 @@ public class TestActivity extends BaseActivity implements View.OnClickListener, 
 
             case R.id.iv_addkey:
                 showAddKeyDialog();
+                break;
+
+            case R.id.iv_setting:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
         }
     }

@@ -11,11 +11,15 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBaidumap();
         setContentView(getLayoutId());
         initView();
         loadData();
     }
 
+    public void initBaidumap(){
+
+    }
     protected abstract int getLayoutId();
 
     protected abstract void initView();

@@ -18,11 +18,19 @@
             android:text="" />
 
         <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/tab_settings_selected" />
+
+        <ImageView
             android:id="@+id/iv_addkey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
             android:src="@mipmap/menu_extend" />
 
         <ImageView
